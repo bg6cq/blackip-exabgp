@@ -5,17 +5,17 @@
 </head>
 
 <body bgcolor=#dddddd>
-<a href=/ target=_blank>流量</a> 
-<a href=index.php>生效的路由</a> 
-<a href=exp.php>撤回的路由</a> 
-<a href=intro.php>介绍</a> 
+<a href=/ target=_blank>flow</a> <!-- Translated to english -->
+<a href=index.php>Effective route</a> <!-- Translated to english -->
+<a href=exp.php>Withdrawn route</a> <!-- Translated to english -->
+<a href=intro.php>Introduction</a> <!-- Translated to english -->
 
 <?php
 
-$db_host = "localhost";
-$db_user = "root";
-$db_passwd = "";
-$db_dbname = "blackip";
+$db_host = "localhost"; // Replace to your server host if needed
+$db_user = "root"; // Replace to your desired database user
+$db_passwd = ""; // Put your database user password here
+$db_dbname = "blackip"; // You shudn't change this name
 
 $mysqli = new mysqli($db_host, $db_user, $db_passwd, $db_dbname);
 if(mysqli_connect_error()){
@@ -32,11 +32,11 @@ if ( isset($_SESSION["isadmin"]) && $_SESSION["isadmin"]) {
 }  
 ?>
 
-技术支持: james@ustc.edu.cn  
+Technical Support: james@ustc.edu.cn  
 
 <?php 
 
-echo "您的IP地址:";
+echo "Your IP address:";
 
 if (!empty($_SERVER['HTTP_X_REAL_IP'])) echo $_SERVER['HTTP_X_REAL_IP'];
 else 
@@ -47,8 +47,13 @@ $q="select TIMESTAMPDIFF(second, now(), tm) from lastrun";
 $result = $mysqli->query($q);
 $r=$result->fetch_array();
 if($r[0]<=2)
-        echo " <font color=green>ExaBGP运行正常</font>";
-else echo " <font color=red>ExaBGP未运行</font>";
+{
+    echo " <font color=green>ExaBGP is operating normally</font>";
+}
+else
+{
+    echo " <font color=red>ExaBGP is not running</font>";
+}
 
 ?>
 <hr>
