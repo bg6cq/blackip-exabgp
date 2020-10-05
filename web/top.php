@@ -12,15 +12,8 @@
 
 <?php
 
-$db_host = "localhost"; // Replace to your server host if needed
-$db_user = "root"; // Replace to your desired database user
-$db_passwd = ""; // Put your database user password here
-$db_dbname = "blackip"; // You shudn't change this name
+include "../config.php";
 
-$mysqli = new mysqli($db_host, $db_user, $db_passwd, $db_dbname);
-if(mysqli_connect_error()){
-	echo mysqli_connect_error();
-}
 session_start();
 
 function isMobile() {
@@ -45,10 +38,14 @@ echo  $_SERVER["REMOTE_ADDR"];
 echo " ";
 $q="select TIMESTAMPDIFF(second, now(), tm) from lastrun";
 $result = $mysqli->query($q);
-$r=$result->fetch_array();
-if($r[0]<=2)
+
+if($result)
 {
-    echo " <font color=green>ExaBGP is operating normally</font>";
+    $r=$result->fetch_array();
+    if($r[0]<=2)
+    {
+        echo " <font color=green>ExaBGP is operating normally</font>";
+    }
 }
 else
 {

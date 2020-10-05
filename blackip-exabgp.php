@@ -1,16 +1,6 @@
 <?php
 
-$db_host = "localhost"; // Replace to your server host if needed
-$db_user = "root"; // Replace to your desired database user
-$db_passwd = ""; // Put your database user password here
-$db_dbname = "blackip"; // You shudn't change this name
-
-// Starting conection to mysql or mariadb database
-$mysqli = new mysqli($db_host, $db_user, $db_passwd, $db_dbname);
-if(mysqli_connect_error())
-{
-	echo mysqli_connect_error();
-}
+include "config.php";
 
 // 开始运行，先把处于added状态的路由发送出去
 // Start running, first send out the route in the added state

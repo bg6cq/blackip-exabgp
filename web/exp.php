@@ -2,8 +2,6 @@
 
 include "top.php";
 
-$routerip="210.45.230.89";
-
 $limit=" limit 10 ";
 if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  {
 	if(isMobile())

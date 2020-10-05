@@ -2,11 +2,9 @@
 
 include "top.php";
 
-$routerip="210.45.230.89"; // Put your exabgp router IP address here
-
 $limit=" limit 10 ";
 
-if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  
+if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  
 {
 	if(isMobile())
 		$limit=" limit 100 ";
