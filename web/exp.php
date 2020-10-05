@@ -14,7 +14,7 @@ if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  {
 $q="select count(*) from blackip where status='deleted'";
 $result = $mysqli->query($q);
 $r=$result->fetch_array();
-echo "撤回的路由: ".$r[0]."<p>";
+echo "Withdrawn route: ".$r[0]."<p>";
 
 @$s=$_REQUEST["s"];
 $q="select id,prefix,len,next_hop,other,start,end,msg from blackip where status='deleted' order by inet_aton(prefix)".$limit;
@@ -28,7 +28,7 @@ else if($s=="m")
 	$q="select id,prefix,len,next_hop,other,start,end,msg from blackip where status='deleted' order by msg".$limit;
 $result = $mysqli->query($q);
 echo "<table border=1 cellspacing=0>";
-echo "<tr><th>序号</th><th><a href=exp.php>IP</a></th><th><a href=exp.php?s=n>next_hop</a></th><th>other</th><th><a href=exp.php?s=s>start</a></th><th><a href=exp.php?s=e>end</a></th>";
+echo "<tr><th>Serial number</th><th><a href=exp.php>IP</a></th><th><a href=exp.php?s=n>next_hop</a></th><th>other</th><th><a href=exp.php?s=s>start</a></th><th><a href=exp.php?s=e>end</a></th>";
 echo "<th><a href=exp.php?s=m>MSG</a></th>";
 echo "</tr>\n";
 $count=0;
