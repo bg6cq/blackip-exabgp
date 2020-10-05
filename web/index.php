@@ -172,6 +172,7 @@ while($r=$result->fetch_array()) {
 	echo "</tr>\n";
 }
 echo "</table>";
+
+include "bottom.php";
+
 ?>
-
-

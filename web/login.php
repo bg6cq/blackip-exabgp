@@ -1,6 +1,6 @@
 <?php
 
-require_once('USTC_CAS.php');
+//require_once('USTC_CAS.php');
 
 session_start();
 
@@ -9,18 +9,21 @@ if(isset($_SESSION['isadmin']));
 	 
 $isadmin = $_SESSION['isadmin'];
 
-if (!$isadmin) {
-    $cas = ustc_cas_login();
-    $user = $cas->user();
-    $gid = $cas->gid();
-}
+// if (!$isadmin) {
+//     $cas = ustc_cas_login();
+//     $user = $cas->user();
+//     $gid = $cas->gid();
+// }
+$user = "Wallace";
+$gid = '3199700722';
 
 echo "hello $user/$gid<p>";
 
-if ( $gid == '3199700722') // james
-	$_SESSION['isadmin']=1;
+// if ( $gid == '3199700722') // james
+// 	$_SESSION['isadmin']=1;
 
-$isadmin = $_SESSION['isadmin'];
+$isadmin = 0;
+$_SESSION['isadmin']=0;
 
 if(!$isadmin) {
 	echo "you not allowed to login, contact james@ustc.edu.cn";	
