@@ -1,22 +1,22 @@
 <?php
 
+// All pages should include top.php in order to have session validation
+
 include "../config.php";
 
-session_start();
-
-if(!isset($_SESSION["username"]))
+if(session_start())
 {
-    header("Location: login.php");
-    die();
+    if(!isset($_SESSION["username"]))
+    {
+        header("Location: login.php");
+        die();
+    }
 }
 
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
 
-if ( isset($_SESSION["isadmin"]) && $_SESSION["isadmin"]) {
-	echo "<a href=logout.php>logout</a> ";
-}  
 ?>
 
 <html>
@@ -53,12 +53,12 @@ if($result)
     $r=$result->fetch_array();
     if($r[0]<=2)
     {
-        echo "<span class='exabgp-running'>[ExaBGP is operating normally]</span>";
+        echo "<br>/<span class='exabgp-running'>[ExaBGP is operating normally]</span>";
     }
 }
 else
 {
-    echo " <span class='exabgp-not-running'>[ExaBGP is not running]</span>";
+    echo "<br/><span class='exabgp-not-running'>[ExaBGP is not running]</span>";
 }
 
 echo " Your IP address: ";
