@@ -21,25 +21,6 @@ if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		$stmt->close();
 	}
 
-	if(isset($_REQUEST["add_do"])) 
-	{  
-		//add new
-		$prefix = $_REQUEST["prefix"];
-		$len = $_REQUEST["len"];
-		$next_hop = $_REQUEST["next_hop"];
-		$other= $_REQUEST["other"];
-		$day = intval($_REQUEST["day"]);
-		$msg = $_REQUEST["msg"];
-
-		$q = "insert into blackip (status,prefix,len,next_hop,other,start,end,msg) values ('adding',?,?,?,?,now(),date_add(now(),interval ? day),?)";
-		$stmt=$mysqli->prepare($q);
-		$stmt->bind_param("sissis",$prefix,$len,$next_hop,$other,$day,$msg);
-		$stmt->execute();
-		sleep(2);
-
-		unset($_REQUEST["add_do"]);
-	}
-
 	if(isset($_REQUEST["modi"])) 
 	{  
 		$id=$_REQUEST["id"];
@@ -94,7 +75,7 @@ if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		// add
 		?>
 			<p>
-			<form action=index.php method="POST">
+			<form action="/database-interaction/add_route.php" method="POST">
 				Add routing: <br>
 				<table class="stripped">
 					<thead>

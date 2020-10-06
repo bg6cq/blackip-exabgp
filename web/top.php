@@ -1,17 +1,9 @@
 <?php
 
-// All pages should include top.php in order to have session validation
+// All pages should include top.php in order to have session validation through session.php
 
+include "session.php";
 include "../config.php";
-
-if(session_start())
-{
-    if(!isset($_SESSION["username"]))
-    {
-        header("Location: login.php");
-        die();
-    }
-}
 
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
