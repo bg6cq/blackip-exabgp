@@ -1,3 +1,24 @@
+<?php
+
+include "../config.php";
+
+session_start();
+
+if(!isset($_SESSION["username"]))
+{
+    header("Location: login.php");
+    die();
+}
+
+function isMobile() {
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+}
+
+if ( isset($_SESSION["isadmin"]) && $_SESSION["isadmin"]) {
+	echo "<a href=logout.php>logout</a> ";
+}  
+?>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"" />
@@ -16,25 +37,10 @@
     <a href=index.php><i class="fa fa-fw fa-check"></i> Effective Route</a>
     <a href=exp.php><i class="fa fa-fw fa-times"></i> Withdrawn Route</a>
     <a href=help.php><i class="fa fa-fw fa-question"></i> Help</a>
+    <a href=logout.php><i class="fa fa-fw fa-power-off"></i> Logoff</a>
 </div>
 
 <div class="main">
-
-<?php
-
-include "../config.php";
-// include "login.php";
-
-session_start();
-
-function isMobile() {
-    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
-}
-
-if ( isset($_SESSION["isadmin"]) && $_SESSION["isadmin"]) {
-	echo "<a href=logout.php>logout</a> ";
-}  
-?>
 
 <?php 
 
