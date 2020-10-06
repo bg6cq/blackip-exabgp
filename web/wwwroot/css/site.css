@@ -40,7 +40,14 @@
 body {
   background-color: #dddddd;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
 }
+
+.container {
+  margin: 16px;
+}
+
+/* Exabgp status CSS */
 
 .exabgp-not-running {
   color: red;
@@ -50,6 +57,26 @@ body {
   color: green;
 }
 
-.container {
-  margin: 16px;
+
+/* Table stripped CSS */
+
+table.stripped {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 800px;
 }
+
+  table.stripped td, table.stripped th {
+    border: 1px solid #aaa;
+    text-align: left;
+    padding: 8px;
+  }
+
+  table.stripped tr:nth-child(even) {
+    background-color: #bbb;
+  }
+
+  table.stripped input {
+    width: 100%;
+    text-align: center;
+  }
