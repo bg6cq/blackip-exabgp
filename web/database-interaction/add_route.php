@@ -1,7 +1,6 @@
 <?php
 
 include "../session.php";
-include "../utils.php";
 include "../../config.php";
 
 if(isset($_REQUEST["add_do"])) 
@@ -21,6 +20,6 @@ if(isset($_REQUEST["add_do"]))
     sleep(2);
 }
 
-RedirectTo("../index.php");
+RedirectTo("../index.php"); // Comes included from session.php
 
 ?>
