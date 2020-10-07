@@ -1,6 +1,7 @@
 <?php
 
 include "../session.php";
+include "../utils.php";
 include "../../config.php";
 
 if(isset($_REQUEST["add_do"])) 
@@ -20,8 +21,6 @@ if(isset($_REQUEST["add_do"]))
     sleep(2);
 }
 
-// Redirects to index
-header("Location: ../index.php");
-die();
+RedirectTo("../index.php");
 
 ?>
