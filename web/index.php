@@ -10,17 +10,7 @@ if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		$limit=" limit 100 ";
 	else $limit=" limit 2000 ";
 
-	if(isset($_REQUEST["del"]))  
-	{   
-		//del ip
-		$id= intval($_REQUEST["id"]);
-		$q="update blackip set end=now(),status='deleting' where id=?";
-		$stmt=$mysqli->prepare($q);
-		$stmt->bind_param("i",$id);
-		$stmt->execute();
-		$stmt->close();
-	}
-
+	// Shown when the user clicks on modify hiperlink
 	if(isset($_REQUEST["modi"])) 
 	{  
 		$id=$_REQUEST["id"];
@@ -33,27 +23,25 @@ if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		$stmt->fetch();
 
 		// Printing form
-		echo "<form action=index.php METHOD=get>";
+		echo "<h3>Modify Route $prefix/$len</h3>";
+		echo "<form action=database-interaction/modify_route.php METHOD=post>";
 		echo "<input name=modi_do type=hidden>";
 		echo "<input name=id type=hidden value=\"$id\">";
 		echo "<input name=s type=hidden value=\"$s\">";
-		echo "<table><tr><td>IP: </td><td>$prefix</td><td>len: </td><td>$len</td></tr>";
-		echo "<tr><td>expire date: </td><td><input name=end value=\"$end\"></td><td>Message: </td><td><input name=msg size=100 value=\"$msg\"></td></tr>";
-		echo "</table><input name=modi_do type=submit value='modify'>";
-		echo "</form><p>";
+		echo "<table class='stripped'>";
+		echo "<thead>";
+		echo "<tr><th>Parameters</th><th style='text-align: center;'>Values</th></tr>";
+		echo "</thead>";
+		echo "<tbody>";
+		echo "<tr><td>IP </td><td style='text-align: center;'>$prefix</td></tr>";
+		echo "<tr><td>Prefix length </td><td style='text-align: center;'>$len</td></tr>";
+		echo "<tr><td>Expire Date </td><td><input name=end value=\"$end\"></td></tr>";
+		echo "<tr><td>Message </td><td><input name=msg size=100 value=\"$msg\"></td></tr>";
+		echo "</tbody>";
+		echo "</table><br/>";
+		echo "<input name=modi_do type=submit value='modify'>";
+		echo "</form>";
 
-		$stmt->close();
-	}
-
-	if(isset($_REQUEST["modi_do"])) 
-	{ 
-		$id= $_REQUEST["id"];
-		$end = $_REQUEST["end"];
-		$msg = $_REQUEST["msg"];
-		$q="update blackip set end=?, msg = ? where id =?";
-		$stmt=$mysqli->prepare($q);
-		$stmt->bind_param("sss", $end, $msg, $id);
-		$stmt->execute();
 		$stmt->close();
 	}
 }
@@ -76,7 +64,7 @@ if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		?>
 			<p>
 			<form action="/database-interaction/add_route.php" method="POST">
-				Add routing: <br>
+				<h3>Add Route</h3>
 				<table class="stripped">
 					<thead>
 						<tr>
@@ -166,7 +154,7 @@ while($r=$result->fetch_array()) {
 	echo "</td>";
 		if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1)) 
 		{
-			echo "<td><a href=index.php?del&id=$r[0]&s=$s  onclick=\"return confirm('delete $r[1]/$r[2] ?');\">delete</a>&nbsp;";
+			echo "<td><a href=database-interaction/delete_route.php?del&id=$r[0]&s=$s  onclick=\"return confirm('delete $r[1]/$r[2] ?');\">delete</a>&nbsp;";
 			echo "<a href=index.php?modi&id=$r[0]&s=$s>modify</a>";
 			echo "</td>";
         };
