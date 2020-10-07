@@ -1,6 +1,8 @@
 <?php
 
+include "utils.php";
 include "../config.php";
+use Dapphp\Radius\Radius;
 
 if($authentication_method == AuthenticationMethod::USTC_CAS)
 {
@@ -36,20 +38,36 @@ elseif ($authentication_method == AuthenticationMethod::RADIUS)
 {
 	if($_SERVER['REQUEST_METHOD'] === 'POST')
 	{
-		if($_POST['username'] == 'wallace' && $_POST['password'] == '1234')
+		// loading RADIUS client
+		require_once('radius-2.5.4/autoload.php');
+
+		$client = new Radius();
+		$client->setServer($radius_server_ip)
+			   ->setSecret($radius_shared_secret);
+
+		if($client->accessRequest($_POST['username'], $_POST['password']))
 		{
-			echo $_POST['username'];
 			session_start();
-			$_SESSION['username'] = 'wallace';
+			$_SESSION['username'] = $_POST['username'];
 			$_SESSION['isadmin']=1;
 
 			// Redirects to index
-			header("Location: index.php");
-			die();
+			RedirectTo("index.php");
+		}
+		else
+		{
+			// false returned on failure
+			echo sprintf(
+				"Access-Request failed with error %d (%s).\n",
+				$client->getErrorCode(),
+				$client->getErrorMessage()
+			);
 		}
 	}
 
 	?>
+	
+	<!-- This form is only shown when RADIUS authentication is selected -->
 	<html>
 		<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"" />
