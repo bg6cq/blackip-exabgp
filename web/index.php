@@ -70,9 +70,9 @@ echo "Update routing: ".$r[0]." ";
 
 if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  
 {
+	// Add route case
 	if(isset($_REQUEST["add"])) 
 	{ 
-		// add
 		?>
 			<p>
 			<form action="/database-interaction/add_route.php" method="POST">
@@ -140,7 +140,7 @@ else if($s=="n")
 else if($s=="m")
 	$q="select id,prefix,len,next_hop,other,start,end,msg from blackip where status='added' order by msg".$limit;
 $result = $mysqli->query($q);
-echo "<table border=1 cellspacing=0>";
+echo "<table class='stripped full-width'>";
 echo "<tr><th>Serial number</th><th><a href=index.php>IP</a></th><th><a href=index.php?s=n>next_hop</a></th><th>other</th><th><a href=index.php?s=s>start</a></th><th><a href=index.php?s=e>end</a></th>";
 echo "<th><a href=index.php?s=m>MSG</a></th>";
 if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))

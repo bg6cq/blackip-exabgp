@@ -66,6 +66,10 @@ table.stripped {
   width: 800px;
 }
 
+  table.stripped.full-width {
+    width: 100%;
+  }
+
   table.stripped td, table.stripped th {
     border: 1px solid #aaa;
     text-align: left;
