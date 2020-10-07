@@ -23,4 +23,11 @@ So as to complete the DDoS traffic cleaning work.
 <p>
 下图是工作原理示意: (The following figure shows the working principle) 
 </p>
-<img src=DDoS.png width=800>
+<img src="/wwwroot/DDoS.png" width=800>
+
+
+<?php
+
+include "bottom.php";
+
+?>

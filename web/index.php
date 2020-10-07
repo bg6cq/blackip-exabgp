@@ -21,41 +21,6 @@ if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		$stmt->close();
 	}
 
-	if(isset($_REQUEST["add_do"])) 
-	{  
-		//add new
-		$prefix = $_REQUEST["prefix"];
-		$len = $_REQUEST["len"];
-		$next_hop = $_REQUEST["next_hop"];
-		$other= $_REQUEST["other"];
-		$day = intval($_REQUEST["day"]);
-		$msg = $_REQUEST["msg"];
-
-		if(0) 
-		{
-			$q="select count(*) from mylist where inet_aton(ip) = (inet_aton(?) & inet_aton(mask))";
-			$stmt=$mysqli->prepare($q);
-			$stmt->bind_param("s",$prefix);
-			$stmt->execute();
-			$stmt->bind_result($count);
-			$stmt->fetch();
-			$stmt->close();
-		}
-
-		$count=1;
-		
-		if($count==0)  
-			echo "Error: IP ".$prefix." not in mylist, check your input<p>";
-		else 
-		{
-			$q = "insert into blackip (status,prefix,len,next_hop,other,start,end,msg) values ('adding',?,?,?,?,now(),date_add(now(),interval ? day),?)";
-			$stmt=$mysqli->prepare($q);
-			$stmt->bind_param("sissis",$prefix,$len,$next_hop,$other,$day,$msg);
-			$stmt->execute();
-			sleep(2);
-		}
-	}
-
 	if(isset($_REQUEST["modi"])) 
 	{  
 		$id=$_REQUEST["id"];
@@ -73,7 +38,7 @@ if(isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
 		echo "<input name=id type=hidden value=\"$id\">";
 		echo "<input name=s type=hidden value=\"$s\">";
 		echo "<table><tr><td>IP: </td><td>$prefix</td><td>len: </td><td>$len</td></tr>";
-		echo "<tr><td>expire date: </td><td><input name=end value=\"$end\"></td><td>news: </td><td><input name=msg size=100 value=\"$msg\"></td></tr>";
+		echo "<tr><td>expire date: </td><td><input name=end value=\"$end\"></td><td>Message: </td><td><input name=msg size=100 value=\"$msg\"></td></tr>";
 		echo "</table><input name=modi_do type=submit value='modify'>";
 		echo "</form><p>";
 
@@ -105,25 +70,61 @@ echo "Update routing: ".$r[0]." ";
 
 if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))  
 {
+	// Add route case
 	if(isset($_REQUEST["add"])) 
 	{ 
-		// add
 		?>
 			<p>
-			<form action=index.php>
+			<form action="/database-interaction/add_route.php" method="POST">
 				Add routing: <br>
-				Prefix: <input name=prefix><br>
-				preflen: <input name=len value=32 size=3><br>
-				next_hop: <input name=next_hop value="<?php echo $routerip;?>"/><br>
-				Effective days: <input name=day value=10 size=2><br>
-				other: <input name=other> example: local-preference 65000 community [100:100]<br>
-				news: <input name=msg><br>
-				<input type=submit name=add_do value="Add to">
+				<table class="stripped">
+					<thead>
+						<tr>
+							<th>Options</th>
+							<th>Inputs</th>
+							<th>Examples</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Prefix</td>
+							<td><input type="text" name="prefix" required></td>
+							<td>192.168.0.25</td>
+						</tr>
+						<tr>
+							<td>Prefix Length</td>
+							<td><input type="text" name="len" value="32" maxlength="2" required></td>
+							<td>32</td>
+						</tr>
+						<tr>
+							<td>Next Hop</td>
+							<td><input type="text" name="next_hop" value="<?php echo $routerip;?>" required/></td>
+							<td><?php echo $routerip;?></td>
+						</tr>
+						<tr>
+							<td>Effective Days</td>
+							<td><input type="text" name="day" required></td>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td>Other</td>
+							<td><input type="text" name="other"></td>
+							<td>local-preference 65000 community [100:100]</td>
+						</tr>
+						<tr>
+							<td>Message</td>
+							<td><input type="text" name=msg></td>
+							<td>Intranet Server</td>
+						</tr>
+					</tbody>
+				</table>
+				<br/>
+				<input type="submit" name="add_do" value="Add Route">
 			</form>
 		<?php
 	}
 	else {
-		echo "<a href=index.php?add>add</a>";
+		echo "<a href=index.php?add><button>Add route</button></a>";
 	}
 } 
 
@@ -139,7 +140,7 @@ else if($s=="n")
 else if($s=="m")
 	$q="select id,prefix,len,next_hop,other,start,end,msg from blackip where status='added' order by msg".$limit;
 $result = $mysqli->query($q);
-echo "<table border=1 cellspacing=0>";
+echo "<table class='stripped full-width'>";
 echo "<tr><th>Serial number</th><th><a href=index.php>IP</a></th><th><a href=index.php?s=n>next_hop</a></th><th>other</th><th><a href=index.php?s=s>start</a></th><th><a href=index.php?s=e>end</a></th>";
 echo "<th><a href=index.php?s=m>MSG</a></th>";
 if( isset($_SESSION["isadmin"]) && ($_SESSION["isadmin"]==1))
@@ -172,6 +173,7 @@ while($r=$result->fetch_array()) {
 	echo "</tr>\n";
 }
 echo "</table>";
+
+include "bottom.php";
+
 ?>
-
-
