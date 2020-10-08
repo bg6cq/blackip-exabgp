@@ -28,6 +28,7 @@ The web directory is a simple management interface, and login.php is the login p
 Reference materials:
 
 [Use ExaBGP to send BGP routing information and clean DDoS traffic](https://github.com/bg6cq/ITTS/blob/master/security/bgp/exabgp/README.md)
+[Dapphp\Radius - A pure PHP RADIUS client based on the SysCo/al implementation](https://github.com/dapphp/radius)
 
 ## Instalation
 
