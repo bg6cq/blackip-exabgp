@@ -1,3 +1,4 @@
+USE blackip;
 -- MySQL dump 10.14  Distrib 5.5.56-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: blackip
@@ -49,6 +50,9 @@ DROP TABLE IF EXISTS `lastrun`;
 CREATE TABLE `lastrun` (
   `tm` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+INSERT INTO `lastrun` VALUES (NOW());
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
